@@ -1,0 +1,1 @@
+Note: Most of my development work involves proprietary systems and cannot be shared publicly. This sample demonstrates my coding style and approach to structured C# development within non-confidential parameters.
