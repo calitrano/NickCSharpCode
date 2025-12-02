@@ -5,12 +5,10 @@ using System.Data.SqlClient;
 namespace CSharpUpdateSQLServer
 {
     class Program   // WHEN DOING PROGRAMMING AT HOME ON YOUR DESKTOP
-        // DUDE MAKE SURE SQL SERVER HAS THE NORTHWIND DATABASE INSTALLED OR YOUR FUCT!
+        // MAKE SURE SQL SERVER HAS THE NORTHWIND DATABASE INSTALLED 
     // LOOK IN MY DOC. PROGRAMS sql Server stuff.doc IT WILL TELL YOU HOW TO DOWNLOAD NORTHWIND!
 
-        //DUDE MAKE SURE YOU RUN AS ADMINISTRATOR OR YOU WILL BE GOOGLEING
-    // WHAT THE HECK IS The requested operation requires elevation !!! 
-        // ITS FLIPPING WINDOWS VISTA AGAIN!!! 
+        
     {
         const String m_strProgramID = "CSharpUpdateSQLServer";
 
@@ -83,7 +81,7 @@ namespace CSharpUpdateSQLServer
 
             //for (int i = 0; i < 10000; i++)
             //{
-            //    Console.Write("yo nick\n ");
+            //    Console.Write("hey nick\n ");
             //}
 
         }
