@@ -11,7 +11,7 @@ using System.Text.RegularExpressions;
 using Logging;
 using IniReader;
 /// Nick DeNora version 11/18/2007
-/// This is a Extract of Drug Claims for Praxair Group going to Ceridian
+/// This is a Extract of claims.. in an insurance type application.
 /// 
 namespace imk00003
 {
@@ -33,8 +33,8 @@ namespace imk00003
         string iniFilePath;
         FileStream fs_OutputFile;
         FileStream fs_InputFile;
-        StreamWriter m_oPraxairClaimsOutputFile;
-        StreamReader m_oPraxairClaimsInputFile;
+        StreamWriter m_oCustomerClaimsOutputFile;
+        StreamReader m_oCustomerClaimsInputFile;
         FileStream fs_LogFile;
         StreamWriter sw_LogFile;
 
@@ -54,7 +54,7 @@ namespace imk00003
 
         const string CARRIER_IND = "BC";
         const string CLAIM_TYPE = "R";
-        const string PRAXAIR = "00402650";
+        const string Customer = "00402650";
 
         static void Main(string[] args)
         {
@@ -151,7 +151,7 @@ namespace imk00003
             using (new CStep("OpenInputFiles"))
             {
                 fs_InputFile = new FileStream(m_strInputFile, FileMode.Open, FileAccess.Read, FileShare.Read);
-                m_oPraxairClaimsInputFile = new StreamReader(m_strInputFile);
+                m_oCustomerClaimsInputFile = new StreamReader(m_strInputFile);
             }
 
 
@@ -165,9 +165,9 @@ namespace imk00003
                 fs_LogFile = new FileStream(m_strLogFile, FileMode.Create, FileAccess.Write, FileShare.None);
                 sw_LogFile = new StreamWriter(fs_LogFile);
 
-                //Open Output File - Claims file to Praxair
+                //Open Output File - Claims file to Customer
                 fs_OutputFile = new FileStream(m_strOutputFile, FileMode.Create, FileAccess.Write, FileShare.None);
-                m_oPraxairClaimsOutputFile = new StreamWriter(fs_OutputFile);
+                m_oCustomerClaimsOutputFile = new StreamWriter(fs_OutputFile);
             }
         }
 
@@ -306,7 +306,7 @@ namespace imk00003
 
                            " FROM ANT017_DRUG_CLAIMS ANT017 " +
                    "WHERE " +
-                " ANT017.GRGR_ID = '" + PRAXAIR + "' AND " +
+                " ANT017.GRGR_ID = '" + Customer + "' AND " +
                 " ANT017.CLM_PAY_DTE > ? " +
                 " AND ANT017.CLM_PAY_DTE < ? " +
                 " AND ANT017.DRUG_ORIG_AMT >=0 " +  
@@ -623,7 +623,7 @@ namespace imk00003
         {
 
             string ls_headerLine;
-            string ls_carrierCode = "BCBSWNY ";
+            string ls_carrierCode = "companyCode ";
             string ls_filler1 = "";
 
             ls_filler1 = PadLeftLimitString(ls_filler1, 20, '0');
@@ -632,7 +632,7 @@ namespace imk00003
 
             ls_headerLine = ls_filler1 + ls_carrierCode + ls_currentDate;
 
-            m_oPraxairClaimsOutputFile.WriteLine(ls_headerLine);
+            m_oCustomerClaimsOutputFile.WriteLine(ls_headerLine);
         }
 
         void WriteTrailerRecord(int p_irecordCount)
@@ -647,12 +647,12 @@ namespace imk00003
 
             li_recordCount = p_irecordCount + mi_medClaimsReadIn;
             ls_TrailerRecord = ls_TrailerFiller + li_recordCount + ls_TrailerSpaces;
-            m_oPraxairClaimsOutputFile.WriteLine(ls_TrailerRecord);
+            m_oCustomerClaimsOutputFile.WriteLine(ls_TrailerRecord);
         }
 
         void WriteDetailOutput(string p_strBuffer)
         {
-            m_oPraxairClaimsOutputFile.WriteLine(p_strBuffer);
+            m_oCustomerClaimsOutputFile.WriteLine(p_strBuffer);
         }
 
         void DisplayWriteLog(string p_strBuffer, WriteOptions p_iWriteOpt)
@@ -684,8 +684,8 @@ namespace imk00003
                 if (sw_LogFile != null)
                     sw_LogFile.Close();
 
-                if (m_oPraxairClaimsOutputFile != null)
-                    m_oPraxairClaimsOutputFile.Close();
+                if (m_oCustomerClaimsOutputFile != null)
+                    m_oCustomerClaimsOutputFile.Close();
             }
         }
     }
