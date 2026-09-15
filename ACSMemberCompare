@@ -1,0 +1,47 @@
+using System.Diagnostics;
+using System.Threading;
+
+string compare1 = "TWXP005CQ";
+string compare2 = "EWXP005CQ";
+
+string acsExe =
+    @"C:\Users\denoran\IBM\ClientSolutions\Start_Programs\Windows_x86-64\acslaunch_win-64.exe";
+
+string template =
+    File.ReadAllText(@"C:\Users\denoran\C#PROJECTS\ACSCompareMembers\Template_Compare.dtfx");
+
+string[] members = { compare1, compare2 };
+//string[] members = { compare1 };
+
+
+foreach (string member in members)
+{
+    string outputPath = $@"C:\Exports\{member}.txt";
+
+            if (File.Exists(outputPath))
+            {
+                File.Delete(outputPath);
+            }
+
+    string dtfxText = template
+        .Replace("{MEMBER}", member)
+        .Replace("{OUTPUTPATH}", outputPath);
+
+    string dtfxFile = $@"C:\Exports\{member}.dtfx";
+
+    File.WriteAllText(dtfxFile, dtfxText);
+
+
+    Process.Start(new ProcessStartInfo
+    {
+        
+        FileName = acsExe,
+        Arguments = $"/plugin=dtbatch \"{dtfxFile}\"",
+        UseShellExecute = true
+    });
+//Thread.Sleep(10000);
+
+    Console.WriteLine($"Started {member}");
+}
+
+Console.WriteLine("Done.");
